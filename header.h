@@ -1,25 +1,13 @@
-#include<stdio.h>
 #include<stdlib.h>
-#define MAX 30
-#define AMAX 26
-#define INSERT 1;
-
-typedef struct _node_
+#define MAX 20
+struct _array_
 {
-    char word[MAX];
-    char meaning[MAX];
-    struct _node_ *ptr;
-}Node;
-
-typedef struct hash_table
-{
-    Node *head,*tail;
-    int count;
-}Hash;
-
-Hash* initialize();
-int insert(Hash*,char*,char*);
-char* search(Hash*,char*);
-void display(Hash*);
+    int array[MAX];
+    int csize,tsize;
+};
+typedef struct _array_ ARRAY;
 
 
+ARRAY initialize(int);
+int insert(ARRAY,int);
+void display(ARRAY);

@@ -1,31 +1,25 @@
-#include<sdio.h>
-#include<sdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 30
+#define AMAX 26
+#define INSERT 1;
 
 typedef struct _node_
 {
-    char name[MAX];
-    int age;
-    float weight;
-    float height;
-    int bmi;
+    char word[MAX];
+    char meaning[MAX];
     struct _node_ *ptr;
-}CANDIDATE;
-typedef struct _batch_
-{
-   CANDIDATE *head,*tail;
-   int count;
-}BATCH;
+}Node;
 
-typedef struct _overweight_
-{  
-   int obess;
-   int under_weight;
-} OVERWEIGHT;
-   
-BATCH* initialization();
-OVERWEIGHT* initialization_overweight();
-CANDIDATE* getnode(char*,int,float,float);
-int insert(BATCH*,char*,int,float,float);
-int calculate_underweight(BATCH*,OVERWEIGHT*);
-void display(BATCH*);
-   
+typedef struct hash_table
+{
+    Node *head,*tail;
+    int count;
+}Hash;
+
+Hash* initialize();
+int insert(Hash*,char*,char*);
+char* search(Hash*,char*);
+void display(Hash*);
+
+

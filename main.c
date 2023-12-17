@@ -1,59 +1,57 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 #include<assert.h>
 #include "header.h"
-
 
 int main()
 {
 
-   BATCH *batch_one,*batch_two;
-   OVERWEIGHT *underweight_batchone,*underweight_batchtwo;
+Hash *hash_ptr;
 
-   //initialization
-   batch_one=initialization();
-   batch_two=initialization();
-   underweight_batchone=initialization_overweight();
-   underweight_batchtwo=initialization_overweight();
-
-   //checking
-   assert(batch_one->count==0&&batch_one->head==NULL&&batch_one->tail==NULL);
-   assert(batch_two->count==0&&batch_two->head==NULL&&batch_two->tail==NULL);
-   assert(underweight_batchone->obess==0&&underweight_batchone->under_weight==0);
-
-
-     //insert batch1
-     assert(insert(batch_one,"punith",23,20.2,182));
-     assert(insert(batch_one,"varun",26,33.2,162));
-     assert(insert(batch_one,"deepak",29,18.2,152));
-     assert(insert(batch_one,"sudeep",30,40.2,142));
-     assert(insert(batch_one,"dilip",21,30.2,192));
-     assert(insert(batch_one,"arun",16,25.2,172));
-     assert(insert(batch_one,"darshan",26,30.2,200));
-
-      //insert batch2
-     assert(insert(batch_two,"anil",26,26.2,182));
-     assert(insert(batch_two,"sunil",28,43.2,132));
-     assert(insert(batch_two,"praveen",19,59.2,142));
-     assert(insert(batch_two,"karthik",36,69.2,182));
-     assert(insert(batch_two,"abhi",28,40.2,172));
-     assert(insert(batch_two,"sachin",29,55.2,182));
-     assert(insert(batch_two,"ganesh",31,60.2,100));
-
-      //calculate under_weight and obess
-    assert(calculate_underweight(batch_one,underweight_batchone));
-    assert(calculate_underweight(batch_two,underweight_batchtwo));
-
-     display(batch_one);
-
-     printf("batchtwo\n");
-      printf("\n");
-     display(batch_two);
-
-
-
-
-
-   return 0;
+hash_ptr=initialize();
+for(int i=0;i<AMAX;i++)
+  {
+      assert((hash_ptr+i)->head==NULL && (hash_ptr+i)->tail==NULL);
+      assert((hash_ptr+i)->count==0);
 }
 
+
+assert(insert(hash_ptr,"Depak","name"));
+assert(insert(hash_ptr,"punith","name"));
+assert(insert(hash_ptr,"abhishek","name"));
+assert(insert(hash_ptr,"varun","name"));
+assert(insert(hash_ptr,"punithkumar","name"));
+assert(insert(hash_ptr,"raju","name"));
+assert(insert(hash_ptr,"sudeep","name"));
+assert(insert(hash_ptr,"varun","name"));
+assert(insert(hash_ptr,"sandeep","name"));
+assert(insert(hash_ptr,"dishu","name"));
+assert(insert(hash_ptr,"mango","fruit"));
+assert(insert(hash_ptr,"tiger","animal"));
+assert(insert(hash_ptr,"lion","animal"));
+assert(insert(hash_ptr,"rose","flower"));
+assert(insert(hash_ptr,"lotus","flower"));
+assert(insert(hash_ptr,"carrat","vegitable"));
+assert(insert(hash_ptr,"Zeebra","animal"));
+assert(insert(hash_ptr,"splender","vehicle"));
+assert(insert(hash_ptr,"Innova crysta","car"));
+assert(insert(hash_ptr,"jam","food"));
+assert(insert(hash_ptr,"money","everything"));
+assert(insert(hash_ptr,"Druva","Boss"));
+
+
+
+
+printf("%s\n",search(hash_ptr,"Depak"));
+printf("%s\n",search(hash_ptr,"Druva"));
+printf("%s\n",search(hash_ptr,"tiger"));
+printf("%s\n",search(hash_ptr,"lion"));
+printf("%s\n",search(hash_ptr,"jam"));
+printf("%s\n",search(hash_ptr,"money"));
+printf("%s\n",search(hash_ptr,""));
+
+//display(hash_ptr);
+
+
+    return 0;
+}

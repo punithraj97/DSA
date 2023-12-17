@@ -1,129 +1,93 @@
-#include<stdlib.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 #include "header.h"
 
-BATCH* initialization()
+Hash* initialize()
 {
-    BATCH *batch;
-    batch=(BATCH*)malloc(sizeof(BATCH));
-    batch->head=batch->tail=NULL;
-    batch->count=0;
-    return batch;
+  Hash *hash_ptr;
+  hash_ptr=(Hash*)malloc(sizeof(Hash)*AMAX);
+  for(int i=0;i<AMAX;i++)
+  {
+      (hash_ptr+i)->head=(hash_ptr+i)->tail=NULL;
+      (hash_ptr+i)->count=0;
+       }
+return hash_ptr;
 }
 
-OVERWEIGHT* initialization_overweight()
+Node* getnode(char word[],char meaning[])
 {
-    OVERWEIGHT *overweight;
-    overweight=(OVERWEIGHT*)malloc(sizeof(OVERWEIGHT));
-    overweight->obess=0;
-    overweight->under_weight=0;
-    return overweight;
-
-
-}
-
-CANDIDATE* getnode(char name[],int age,float weight,float height)
-{
-     CANDIDATE *newnode;
-     newnode=(CANDIDATE*)malloc(sizeof(CANDIDATE));
-     strcpy((newnode->name),name);
-     newnode->age=age;
-     newnode->weight=weight;
-     newnode->height=height;
+     Node *newnode;
+     newnode=(Node*)malloc(sizeof(Node));
+     strcpy((newnode->word),word);
+     strcpy((newnode->meaning),meaning);
      newnode->ptr=NULL;
-     newnode->bmi=((newnode->weight)/(newnode->height*newnode->height))*10000;
      return newnode;
 }
-int insert(BATCH *batch,char name[],int age,float weight,float height)
+
+int insert(Hash *table,char word[],char meaning[])
 {
-     CANDIDATE *newnode;
-     newnode=getnode(name,age,weight,height);
+    int key;
+    Node *newnode;
+    newnode=getnode(word,meaning);
 
-    if(batch->count==0)
+    key=*(word+0)%AMAX;
+
+    if((table+key)->count==0)
     {
-        batch->head=batch->tail=newnode;
-        batch->count++;
-       return INSERT;
+        (table+key)->head=(table+key)->tail=newnode;
+        (table+key)->count++;
     }
-
-    else if(newnode->bmi<batch->head->bmi)
-    {
-        newnode->ptr=batch->head;
-        batch->head=newnode;
-         batch->count++;
-        return INSERT;
-    }
-
     else
         {
-        CANDIDATE *temp;
-        temp=batch->head;
-        while(temp->ptr!=NULL&&(temp->ptr->bmi)<(newnode->bmi))
-        {
-            temp=temp->ptr;
-        }
-
-        if(temp->ptr==NULL)
-        {
-            temp->ptr=newnode;
-            batch->tail=newnode;
-             batch->count++;
-            return INSERT;
-        }
-        else{
-           newnode->ptr=temp->ptr;
-           temp->ptr=newnode;
-            batch->count++;
-            return INSERT;
-        }
+        newnode->ptr=(table+key)->head;
+       (table+key)->head=newnode;
+       (table+key)->count++;
     }
+
+    return INSERT;
+}
+
+char* search(Hash *table,char word[])
+{
+    Node *temp;
+    int key;
+    key=*(word+0)%AMAX;
+    if((table+key)->count==0)
+        return "empty";
+    else{
+    temp=(table+key)->head;
+    while(temp!=NULL)
+    {
+        if(!(strcmp(temp->word,word)))
+            break;
+    }
+    if(temp==NULL)
+        return "not found";
+      else
+        return temp->meaning;
+    }
+}
+void display(Hash *table)
+{
+
+    Node *temp;
+    for(int i=0;i<AMAX;i++)
+    {
+      temp=(table+i)->head;
+      while(temp!=NULL)
+      {
+          printf("%s\n",temp->word);
+          printf("%s\n",temp->meaning);
+          temp=temp->ptr;
+      }
+      }
+
+
+    }
+    printf("\n");
 
 }
 
-int calculate_underweight(BATCH *batch,OVERWEIGHT *over)
-{
-    if(batch->count==0)
-    {
-        over->obess=0;
-        over->under_weight=0;
-        return 1;
-    }
-    else
-        {
-           CANDIDATE *temp;
-
-       temp=batch->head;
-       while(temp!=NULL)
-       {
-           if(temp->bmi<18.5)
-             over->under_weight++;
-
-           else  if(temp->bmi>30)
-            over->obess++;
-
-            temp=temp->ptr;
-        }
-       return 1;
-
-    }
-    }
-
-    void display(BATCH *batch)
-    {
-        CANDIDATE *temp;
-        temp=batch->head;
-
-        while(temp!=NULL)
-        {
-            printf("candidate name=%s\n",temp->name);
-            printf("candidate age=%d\n",temp->age);
-            printf("candidate height=%f\n",temp->height);
-            printf("candidate weight=%f\n",temp->weight);
-            printf("candidate bmi=%f\n",temp->bmi);
-            temp=temp->ptr;
-            printf("\n");
-        }
 
 
-    }

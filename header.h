@@ -1,11 +1,8 @@
-#include <lpc214x.h>
+#include<sdio.h>
+#include<sdlib.h>
 
-#define PLOCK 0x00000400
-#define THRE (1<<5) 
-#define NEW_LINE 0x0a 
+typedef struct _node_
+{
+    struct _node_ *ptr;
+}
 
-void SetupPLL0(void);
-
-void InitUART0(void);
-
-void U0WriteData(char data);

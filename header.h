@@ -1,4 +1,5 @@
 #include<stdlib.h>
+#include<assert.h>
 #define MAX 20
 struct _array_
 {
